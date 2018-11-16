@@ -1,18 +1,20 @@
 
 def start_game():
 
+    # initialize board
     board = initialize_board()
     while board is "RETRY":
         print("You entered wrong input, please enter only numbers bigger than 0")
         board = initialize_board()
-    print(len(board[0]))
+    # create players
     player = []
     player.append(Player('R'))
     player.append(Player('G'))
-    print(take_turns(player,board))
+    # play
+    print(gameplay(player, board))
 
 
-def take_turns(player,board):
+def gameplay(player, board):
     # players take turns where they place their pieces inside the board
     # with every move, check if there is a winner
     # returns the winner or draw
@@ -34,9 +36,18 @@ def take_turns(player,board):
             finish = True
         print("Turn: ", counter, "\n", board)
         i = 0
+        if check_board_is_full(board):
+            return "DRAW"
     return winner.color
 
 
+def check_board_is_full(board):
+    # check if the board is full bu checking the heightest row
+    row = board[0]
+    for piece in row:
+        if piece =='X':
+            return False
+    return True
 
 
 def initialize_board():
@@ -98,8 +109,6 @@ def check_diagonical_down(board,color):
                 return True
 
 
-
-
 class Player:
     def __init__(self, color):
         # every player has a color idendity
@@ -122,10 +131,6 @@ class Player:
                 if slot[column] == 'X':
                     slot[column] = self.color
                     return board
-
-
-
-
 
 
 if __name__ == '__main__':
