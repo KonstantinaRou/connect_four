@@ -8,9 +8,9 @@ def start_game():
     print(board.board)
     player1 = Player('R')
     player2 = Player('G')
-    player1.move(board.board)
-    player1.move(board.board)
-    player1.move(board.board)
+    player1.move(board)
+    player1.move(board)
+    player1.move(board)
     print (board.board)
 
 
@@ -41,17 +41,19 @@ class Player:
         self.color = color
 
     def move(self, board):
+        board = board.board
         # make a move on the board, place the player's color inside the board
         column = int(input(" Place your disk at: (enter column)"))
         # check if column is out of bounds
-        while column > len(board) or column <0:
+        while column > len(board) or column < 0:
             print("Wrong input, try again")
-            column = input("Place your disk at: (enter column)")
+            column = int(input("Place your disk at: (enter column)"))
         while board[0][column - 1] != 'X':
             print('slot', column, 'is full try again')
-            column = input("Place your disk at: (enter column)")
+            column = int(input("Place your disk at: (enter column)"))
         else:
             # piece the disk inside the board
+            column = column-1
             for slot in board[::-1]:
                 if slot[column] == 'X':
                     slot[column] = self.color
