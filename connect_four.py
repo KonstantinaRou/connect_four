@@ -6,12 +6,37 @@ def start_game():
         print("You entered wrong input, please enter only numbers bigger than 0")
         board = initialize_board()
     print(len(board[0]))
-    player1 = Player('R')
-    player2 = Player('Y')
+    player = []
+    player.append(Player('R'))
+    player.append(Player('G'))
+    print(take_turns(player,board))
 
 
-    print (check_diagonical_up(board,player1.color))
-    print(board)
+def take_turns(player,board):
+    # players take turns where they place their pieces inside the board
+    # with every move, check if there is a winner
+    # returns the winner or draw
+    finish = False
+    i = 0
+    counter = 0
+    winner = ''
+    while not finish:
+        counter +=1
+        player[i].move(board)
+        print("Turn: ", counter, "\n ", board)
+        if check_horiz(board, player[i].color) is True or check_vertically(board, player[i].color) is True:
+            winner = player[i]
+            finish = True
+            break
+        player[i+1].move(board)
+        if check_horiz(board, player[i+1].color) is True or check_vertically(board, player[i+1].color) is True:
+            winner = player[i+1]
+            finish = True
+        print("Turn: ", counter, "\n", board)
+        i = 0
+    return winner.color
+
+
 
 
 def initialize_board():
@@ -71,6 +96,7 @@ def check_diagonical_down(board,color):
             if board[x][y] == color and board[x+1][y+1] == color and board[x+2][y+2] == color and \
                     board[x+3][y+3] == color:
                 return True
+
 
 
 
