@@ -7,15 +7,10 @@ def start_game():
         board = initialize_board()
     print(len(board[0]))
     player1 = Player('R')
-    player2 = Player('G')
-    player1.move(board)
-    player2.move(board)
-    player1.move(board)
-    player2.move(board)
-    player1.move(board)
-    player2.move(board)
-    player1.move(board)
-    print (check_vertically(board,player1.color))
+    player2 = Player('Y')
+
+
+    print (check_diagonical_up(board,player1.color))
     print(board)
 
 
@@ -43,7 +38,7 @@ def check_horiz(board, color):
             if column == next(iter_row,0) and column == color:
                 count += 1
             if count == 4:
-                return color, " is winner!"
+                return True
 
 
 def check_vertically(board,color):
@@ -58,8 +53,24 @@ def check_vertically(board,color):
             if column == next(iter_row, 0) and column == color:
                 count += 1
             if count == 4:
-                return color, " is winner!"
+                return True
 
+
+def check_diagonical_up(board,color):
+    # check / diagonal spaces
+    for x in range(len(board) - 3):
+        for y in range(3, len(board[0])):
+            if board[x][y] == color and board[x + 1][y - 1] == color and board[x + 2][y - 2] == color and \
+                    board[x + 3][y - 3] == color:
+                return True
+
+
+def check_diagonical_down(board,color):
+    for x in range(len(board) - 3):
+        for y in range(len(board[0]) - 3):
+            if board[x][y] == color and board[x+1][y+1] == color and board[x+2][y+2] == color and \
+                    board[x+3][y+3] == color:
+                return True
 
 
 
