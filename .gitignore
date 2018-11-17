@@ -1,7 +1,4 @@
 # Created by .ignore support plugin (hsz.mobi)
-.idea/connect_four.iml
-.idea/inspectionProfiles/
-.idea/misc.xml
-.idea/modules.xml
-.idea/workspace.xml
+.idea
+__pycache__
 venv/
