@@ -1,9 +1,9 @@
 class Player:
     def __init__(self,colors):
         # every player has a color idendity
+
         self.color = (get_color_player(colors))
         while self.color is None:
-            print (self.color)
             self.color =(get_color_player(colors))
 
     def move(self, board):
@@ -31,14 +31,17 @@ class Player:
         :return: int
         """
         try:
-            column = int(input(" Place your disk at: (enter column)"))
+            print ("Player ", self.color, " Turn (enter column):​ ")
+            column = int(input())
             # check if column is out of bounds
             while column > len(board[0]) or column <= 0:
                 print("Wrong input, try again")
-                column = int(input("Place your disk at: (enter column)"))
+                print("Player ", self.color, " Turn (enter column):​ ")
+                column = int(input())
             while board[0][column - 1] != 'X':
                 print('slot', column, 'is full try again')
-                column = int(input("Place your disk at: (enter column)"))
+                print("Player ", self.color, " Turn (enter column):​ ")
+                column = int(input())
         except ValueError:
             print ("Enter a number as column")
             return None
@@ -48,13 +51,14 @@ class Player:
 def get_color_player(colors):
     """
     Player chooses color from available colors
-    
+
     :param colors: list
     :return: string
     """
     try:
-        print("Available colors:" , colors)
-        color = input("Enter your color: ")
+        print("Available colors:", colors)
+
+        color = input()
         if color == 'R' or color == "B" or color ==  "G" or color == "Y":
             colors.remove(color)
             return color

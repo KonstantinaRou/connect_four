@@ -8,7 +8,9 @@ def start_game():
     colors = ['R', 'G', 'B', 'Y']
     # create players
     players = []
+    print("Choose player ",1, " color: ")
     players.append(Player(colors))
+    print("Choose player ",2, " color: ")
     players.append(Player(colors))
 
     # initialize board

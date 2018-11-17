@@ -201,7 +201,7 @@ class BoardTest(unittest.TestCase):
         colors = ['R', 'G', 'B', 'Y']
         player.append(Player(colors))
         player.append(Player(colors))
-        self.assertEqual(board.gameplay(player), "R")
+        self.assertEqual(board.gameplay(player), "Player R won the game!!")
 
     @patch('players.get_color_player')
     @patch('players.Player.get_column')

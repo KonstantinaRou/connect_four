@@ -25,7 +25,7 @@ class Board:
         while not finish:
             counter += 1
             player[i].move(board)
-            print("Turn: ", player[i].color, counter, "\n ", board)
+            print(board)
             if self.search_for_four_pieces(player[i]) is True:
                 winner = player[i]
                 break
@@ -33,11 +33,11 @@ class Board:
             if self.search_for_four_pieces(player[i+1]) is True:
                 winner = player[i + 1]
                 finish = True
-            print("Turn: ", player[i + 1].color, counter, "\n", board)
+            print(board)
             i = 0
             if self.check_board_is_full():
                 return "DRAW"
-        return winner.color
+        return "Player %s won the game!!" % winner.color
 
     def search_for_four_pieces(self, player):
         """
