@@ -46,14 +46,15 @@ class PlayerTest(unittest.TestCase):
         self.assertEqual(player.get_column(board), 1)
 
     @patch('builtins.input', return_value="R")
-    def get_color_player(self):
+    def test_get_color_player(self,mock_input):
         colors = ['R', 'G', 'B', 'Y']
         self.assertEqual(get_color_player(colors),"R")
 
     @patch('builtins.input', return_value="f")
-    def get_color_player_none(self):
+    def test_get_color_player_none(self,mock_input):
         colors = ['R', 'G', 'B', 'Y']
         self.assertEqual(get_color_player(colors),None)
+
 
 
 
@@ -216,7 +217,28 @@ class BoardTest(unittest.TestCase):
         player.append(Player(colors))
         self.assertEqual(board.gameplay(player), "DRAW")
 
+    @patch('players.get_color_player', return_value='R')
+    def search_for_four_pieces_true(self, mock_player):
+        colors = ['R', 'G', 'B', 'Y']
+        board = [["R", "R", "R", "R"],
+                 ["X", "X", "X", "X"],
+                 ["X", "X", "X", "X"],
+                 ["X", "X", "X", "X"]]
+        player = Player(colors)
+        board = Board(board)
+        self.assertEqual(board.search_for_four_pieces(player),True)
 
+
+    @patch('players.get_color_player', return_value='R')
+    def search_for_four_pieces_false(self, mock_player):
+        colors = ['R', 'G', 'B', 'Y']
+        board = [["R", "R", "X", "R"],
+                 ["X", "X", "X", "X"],
+                 ["X", "X", "X", "X"],
+                 ["X", "X", "X", "X"]]
+        player = Player(colors)
+        board = Board(board)
+        self.assertEqual(board.search_for_four_pieces(player),False)
 
 if __name__ == '__main__':
     unittest.main()

@@ -22,16 +22,11 @@ class Board:
             counter += 1
             player[i].move(board)
             print("Turn: ", player[i].color, counter, "\n ", board)
-            if self.check_horiz(player[i].color) is True or self.check_vertically(player[i].color) is True \
-                    or self.check_diagonical_up(player[i].color) is True \
-                    or self.check_diagonical_down(player[i].color):
+            if self.search_for_four_pieces(player[i]) is True:
                 winner = player[i]
-                finish = True
                 break
             player[i + 1].move(board)
-            if self.check_horiz(player[i + 1].color) is True or self.check_vertically(player[i + 1].color) is True \
-                    or self.check_diagonical_up(player[i + 1].color) is True \
-                    or self.check_diagonical_down(player[i + 1].color):
+            if self.search_for_four_pieces(player[i+1]) is True:
                 winner = player[i + 1]
                 finish = True
             print("Turn: ", player[i + 1].color, counter, "\n", board)
@@ -39,6 +34,14 @@ class Board:
             if self.check_board_is_full():
                 return "DRAW"
         return winner.color
+
+    def search_for_four_pieces(self, player):
+        if self.check_horiz(player.color) is True or self.check_vertically(player.color) is True \
+                or self.check_diagonical_up(player.color) is True \
+                or self.check_diagonical_down(player.color):
+            return True
+        else:
+            return False
 
     def check_horiz(self, color):
         board = self.board
@@ -81,6 +84,7 @@ class Board:
         return False
 
     def check_diagonical_down(self, color):
+        # check \ diagonal spaces
         board = self.board
         for x in range(len(board) - 3):
             for y in range(len(board[0]) - 3):
