@@ -4,28 +4,42 @@ from unittest.mock import patch
 from unittest import mock
 from io import StringIO
 from Board import Board
+from Board import getx_y
 from Board import initialize_board
 
-class PlayerTest(unittest.TestCase):
 
-    def run_test_move(self, given_answer , output):
+class PlayerTest(unittest.TestCase):
+    @patch('players.Player.get_column' ,return_value = 1)
+    def test_move(self, mock_col):
+        board = [["X", "X", "X", "X"],
+                 ["X", "X", "X", "X"],
+                 ["X", "X", "X", "X"],
+                 ["X", "X", "X", "X"]]
+
+        expected_board = [["X", "X", "X", "X"],
+                          ["X", "X", "X", "X"],
+                          ["X", "X", "X", "X"],
+                          ["R", "X", "X", "X"]]
+        player = Player('R')
+        self.assertEqual(player.move(board),expected_board)
+
+    @patch('builtins.input', return_value = 'a')
+    def test_get_Column_error(self, mock_input):
         board = [["X", "X", "X", "X"],
                  ["X", "X", "X", "X"],
                  ["X", "X", "X", "X"],
                  ["X", "X", "X", "X"]]
         player = Player('R')
-        with patch('builtins.input', column=given_answer), patch('sys.stdout', new=StringIO()) as fake_out:
-            player.move(board)
+        self.assertEqual(player.get_column(board), None)
 
-        self.assertEqual(fake_out.getvalue().strip(), output)
-
-
-    def testCorrectValue(self):
-        expected_board = [["X", "X", "X", "X"],
-                          ["X", "X", "X", "X"],
-                          ["X", "X", "X", "X"],
-                          ["R", "X", "X", "X"]]
-        self.run_test_move('1', str(expected_board))
+    @patch('builtins.input', return_value = 1)
+    def test_get_Column(self, mock_input):
+        board = [["X", "X", "X", "X"],
+                 ["X", "X", "X", "X"],
+                 ["X", "X", "X", "X"],
+                 ["X", "X", "X", "X"]]
+        player = Player('R')
+        self.assertEqual(player.get_column(board), 1)
 
 
 class BoardTest(unittest.TestCase):
@@ -145,18 +159,41 @@ class BoardTest(unittest.TestCase):
         board = Board(mockboard)
         self.assertEqual(board.check_board_is_full(), False)
 
-    @patch('Board.getx_y', return_value='4,4')
-    def check_initializeBoard_true(self):
+    @mock.patch('Board.getx_y', return_value=(4,4))
+    def test_initializeBoard_true(self,mock_board):
         board = [["X", "X", "X", "X"],
                  ["X", "X", "X", "X"],
                  ["X", "X", "X", "X"],
                  ["X", "X", "X", "X"]]
-        self.assertEqual(initialize_board(),board)
+        self.assertEqual(initialize_board(), board)
 
-    @patch('Board.getx_y', return_value='None,None')
-    def check_initializeBoard_retry(self):
-        self.assertEqual(initialize_board(),"RETRY")
+    @patch('Board.getx_y', return_value=(None,None))
+    def test_initializeBoard_retry(self,mock_board):
+        self.assertEqual(initialize_board(), "RETRY")
 
+    @patch('players.Player.get_column')
+    def test_gameplay_with_winner(self, mock_moves):
+        mock_moves.side_effect = [1,2,1,2,1,2,1]
+        board = [["X", "X", "X", "X"],
+                 ["X", "X", "X", "X"],
+                 ["X", "X", "X", "X"],
+                 ["X", "X", "X", "X"]]
+        board = Board(board)
+        player = []
+        player.append(Player('R'))
+        player.append(Player('G'))
+        self.assertEqual(board.gameplay(player), "R")
+
+    @patch('players.Player.get_column')
+    def test_gameplay_withDraw(self, mock_moves):
+        mock_moves.side_effect = [1,2,2,1]
+        board = [["X", "X"],
+                 ["X", "X"]]
+        board = Board(board)
+        player = []
+        player.append(Player('R'))
+        player.append(Player('G'))
+        self.assertEqual(board.gameplay(player), "DRAW")
 
 
 if __name__ == '__main__':

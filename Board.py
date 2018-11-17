@@ -6,7 +6,8 @@ class Board:
             while self.board is "RETRY":
                 print("You entered wrong input, please enter only numbers bigger than 0")
                 self.board = initialize_board()
-        self.board = board
+        else:
+            self.board = board
 
     def gameplay(self, player):
         # players take turns where they place their pieces inside the board
@@ -102,7 +103,7 @@ def initialize_board():
     # create the board depending on users input
 
         x,y = getx_y()
-        if not x and not y:
+        if x is None or y is None:
             return "RETRY"
         grids = [['X'] * x for _ in range(y)]
         return grids
