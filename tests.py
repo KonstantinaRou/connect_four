@@ -2,9 +2,7 @@ import unittest
 from players import Player
 from unittest.mock import patch
 from unittest import mock
-from io import StringIO
 from Board import Board
-from Board import getx_y
 from Board import initialize_board
 
 
