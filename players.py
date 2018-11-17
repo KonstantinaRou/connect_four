@@ -19,4 +19,5 @@ class Player:
             for slot in board[::-1]:
                 if slot[column] == 'X':
                     slot[column] = self.color
+                    print(board)
                     return board

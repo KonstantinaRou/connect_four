@@ -1,10 +1,12 @@
 
 class Board:
-    def __init__(self,board=None):
-        self.board = initialize_board()
-        while self.board is "RETRY":
-            print("You entered wrong input, please enter only numbers bigger than 0")
+    def __init__(self, board=None):
+        if board is None:
             self.board = initialize_board()
+            while self.board is "RETRY":
+                print("You entered wrong input, please enter only numbers bigger than 0")
+                self.board = initialize_board()
+        self.board = board
 
     def gameplay(self, player):
         # players take turns where they place their pieces inside the board
@@ -49,6 +51,7 @@ class Board:
                     count += 1
                 if count == 4:
                     return True
+        return False
 
     def check_vertically(self, color):
         board = self.board
@@ -64,6 +67,7 @@ class Board:
                     count += 1
                 if count == 4:
                     return True
+        return False
 
     def check_diagonical_up(self, color):
         board = self.board
@@ -73,6 +77,7 @@ class Board:
                 if board[x][y] == color and board[x + 1][y - 1] == color and board[x + 2][y - 2] == color and \
                         board[x + 3][y - 3] == color:
                     return True
+        return False
 
     def check_diagonical_down(self, color):
         board = self.board
@@ -81,6 +86,7 @@ class Board:
                 if board[x][y] == color and board[x + 1][y + 1] == color and board[x + 2][y + 2] == color and \
                         board[x + 3][y + 3] == color:
                     return True
+        return False
 
     def check_board_is_full(self):
         board = self.board
@@ -94,13 +100,19 @@ class Board:
 
 def initialize_board():
     # create the board depending on users input
-    try:
-        x, y = [int(x) for x in input('Enter Grid Size (x, y):').split(',')]
-        if x <= 0 or y <= 0:
-            return "RETRY"
 
+        x,y = getx_y()
+        if not x and not y:
+            return "RETRY"
         grids = [['X'] * x for _ in range(y)]
         return grids
 
+
+def getx_y():
+    try:
+        x, y = [int(x) for x in input('Enter Grid Size (x, y):').split(',')]
+        if x <= 0 or y <= 0:
+            return None, None
+        return x, y
     except ValueError:
-        return "RETRY"
+        return None, None
