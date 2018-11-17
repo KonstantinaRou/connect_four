@@ -7,7 +7,12 @@ class Player:
             self.color =(get_color_player(colors))
 
     def move(self, board):
-        # make a move on the board, place the player's color inside the board
+        """
+        make a move inside the board, place the player's color inside the board
+
+        :param board: list
+        :return: list
+        """
         column = self.get_column(board)
         while column is None:
             column = self.get_column(board)
@@ -18,7 +23,13 @@ class Player:
                 slot[column] = self.color
                 return board
 
-    def get_column(self,board):
+    def get_column(self, board):
+        """
+        Get the column which the player wants to make a move
+
+        :param board: list
+        :return: int
+        """
         try:
             column = int(input(" Place your disk at: (enter column)"))
             # check if column is out of bounds
@@ -35,6 +46,12 @@ class Player:
 
 
 def get_color_player(colors):
+    """
+    Player chooses color from available colors
+    
+    :param colors: list
+    :return: string
+    """
     try:
         print("Available colors:" , colors)
         color = input("Enter your color: ")

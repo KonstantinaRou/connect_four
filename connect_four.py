@@ -1,18 +1,20 @@
 from players import Player
 from Board import Board
-# from players import remove_colors
+
 
 def start_game():
-    # initialize board
 
+    # initialize colors
+    colors = ['R', 'G', 'B', 'Y']
     # create players
-    player = []
-    colors = ['R','G','B','Y']
-    player.append(Player(colors))
-    player.append(Player(colors))
+    players = []
+    players.append(Player(colors))
+    players.append(Player(colors))
+
+    # initialize board
     board = Board()
     # play
-    print(board.gameplay(player))
+    print(board.gameplay(players))
 
 
 if __name__ == '__main__':

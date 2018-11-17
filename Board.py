@@ -10,9 +10,13 @@ class Board:
             self.board = board
 
     def gameplay(self, player):
-        # players take turns where they place their pieces inside the board
-        # with every move, check if there is a winner
-        # returns the winner or draw
+        """
+        :param player : list
+        players take turns where they place their pieces inside the board
+        with every move, check if there is a winner
+        returns the winner or draw
+
+        """
         board = self.board
         finish = False
         i = 0
@@ -36,6 +40,13 @@ class Board:
         return winner.color
 
     def search_for_four_pieces(self, player):
+        """
+
+        :param player: Player object
+        :return: Boolean
+
+        searches for a line vertically/horizontally/diagonally with four discs
+        """
         if self.check_horiz(player.color) is True or self.check_vertically(player.color) is True \
                 or self.check_diagonical_up(player.color) is True \
                 or self.check_diagonical_down(player.color):
@@ -44,8 +55,14 @@ class Board:
             return False
 
     def check_horiz(self, color):
+        """
+        :param color: string
+        :return: Boolean
+        searches for a line horizontally with four discs
+
+        """
         board = self.board
-        # check inside the board horizonadly for 4 continious same color pieces
+
         for row in board:
             iter_row = iter(row)
             count = 1
@@ -58,8 +75,15 @@ class Board:
         return False
 
     def check_vertically(self, color):
+        """
+           :param color: string
+           :return: Boolean
+           searches for a line vertically with four discs
+
+
+        """
         board = self.board
-        # check inside the board vertically for 4 continious same color pieces
+
         cols = zip(*board)
 
         for row in cols:
@@ -74,6 +98,12 @@ class Board:
         return False
 
     def check_diagonical_up(self, color):
+        """
+
+        :param color: string
+        :return: Boolean
+        searches for a line diagonally (/) with four discs
+        """
         board = self.board
         # check / diagonal spaces
         for x in range(len(board) - 3):
@@ -84,6 +114,12 @@ class Board:
         return False
 
     def check_diagonical_down(self, color):
+        """
+
+        :param color: string
+        :return: Boolean
+        searches for a line diagonally (\) with four discs
+        """
         # check \ diagonal spaces
         board = self.board
         for x in range(len(board) - 3):
@@ -94,6 +130,13 @@ class Board:
         return False
 
     def check_board_is_full(self):
+        """
+
+        :return: Boolean
+
+        Checks if a board is full
+
+        """
         board = self.board
         # check if the board is full bu checking the heightest row
         row = board[0]
@@ -104,16 +147,23 @@ class Board:
 
 
 def initialize_board():
-    # create the board depending on users input
 
-        x,y = getx_y()
-        if x is None or y is None:
-            return "RETRY"
-        grids = [['X'] * x for _ in range(y)]
-        return grids
+    """
+    creates a board depending on users input
+    :return: list
+    """
+    x,y = getx_y()
+    if x is None or y is None:
+        return "RETRY"
+    grids = [['X'] * x for _ in range(y)]
+    return grids
 
 
 def getx_y():
+    """
+    Gets the width and  the height from the user
+    :return:  tuple
+    """
     try:
         x, y = [int(x) for x in input('Enter Grid Size (x, y):').split(',')]
         if x <= 0 or y <= 0:
